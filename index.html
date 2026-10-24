@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080d18">
+  <title>Code Breaker | Hacker Challenge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <div id="toast" class="toast" role="status"></div>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Code Breaker home"><span class="brand-mark">⌘</span><span>CODE<span class="accent">BREAKER</span><small>THE HACKER CHALLENGE</small></span></a>
+      <div class="top-actions"><span class="online-dot"></span><span id="auth-status">SECURE SESSION</span><button id="logout-btn" class="ghost small hidden">Log out</button></div>
+    </header>
+
+    <section id="auth-screen" class="auth-layout">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> SYSTEM ONLINE · PUZZLE PROTOCOL 01</div>
+        <h1>Crack the code.<br><span class="gradient-text">Beat the system.</span></h1>
+        <p class="lead">A logic-first hacking simulation. Read the clues, think several moves ahead, and earn your way through 50 increasingly ruthless security levels.</p>
+        <div class="feature-row"><div class="feature"><b>50</b><span>LEVELS</span></div><div class="feature"><b>3</b><span>DIFFICULTY ZONES</span></div><div class="feature"><b>∞</b><span>LOGIC REQUIRED</span></div></div>
+        <div class="terminal"><div class="terminal-head"><span></span><span></span><span></span><small>system_log.txt</small></div><p><span class="terminal-green">root@cb-system:~$</span> initialize_logic_engine</p><p class="muted">Loading challenge database<span class="blink">_</span></p><p class="terminal-green">[OK] Your next move matters.</p></div>
+      </div>
+      <div class="auth-card">
+        <div class="card-icon">◈</div><div class="eyebrow">PLAYER AUTHENTICATION</div>
+        <h2 id="auth-title">Enter the system</h2><p id="auth-subtitle" class="muted">Create an account to save your progress across devices.</p>
+        <form id="auth-form">
+          <label for="player-name" id="name-label">Player name</label><input id="player-name" autocomplete="nickname" placeholder="e.g. ShadowFox" maxlength="22" required>
+          <label for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          <label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="At least 6 characters" minlength="6" required>
+          <button class="primary full" type="submit" id="auth-submit">Create account <span>→</span></button>
+        </form>
+        <p class="auth-switch"><span id="switch-copy">Already registered?</span> <button id="switch-auth" class="link-btn">Log in</button></p>
+        <div class="secure-note">▣ Progress syncs to your account when Firebase is configured.</div>
+      </div>
+    </section>
+
+    <section id="game-screen" class="hidden">
+      <div class="welcome-row"><div><div class="eyebrow">WELCOME BACK, OPERATIVE</div><h1 class="welcome-title">Ready to <span class="gradient-text">break in?</span></h1><p class="muted">Every clue is information. Every guess has a cost.</p></div><div class="player-chip"><div class="avatar" id="avatar">CB</div><div><b id="player-display">Operative</b><small id="player-email">secure user</small></div></div></div>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="stat-icon">◈</span><small>LEVEL REACHED</small><strong id="level-stat">01 <em>/ 50</em></strong><div class="stat-line"><i id="level-progress"></i></div></div>
+        <div class="stat-card"><span class="stat-icon">✦</span><small>XP EARNED</small><strong id="xp-stat">0</strong><span class="stat-foot">Keep solving to rank up</span></div>
+        <div class="stat-card"><span class="stat-icon">⌁</span><small>PUZZLES SOLVED</small><strong id="solved-stat">0</strong><span class="stat-foot">Your record is saved</span></div>
+        <div class="stat-card"><span class="stat-icon">⚡</span><small>OPERATIVE RANK</small><strong id="rank-stat">Recruit</strong><span class="stat-foot" id="rank-foot">Prove your logic</span></div>
+      </div>
+      <div class="game-grid">
+        <section class="panel challenge-panel">
+          <div class="panel-heading"><div><div class="eyebrow">ACTIVE MISSION</div><h2 id="mission-title">Level 01 <span class="tag easy" id="difficulty-tag">EASY</span></h2></div><button id="levels-toggle" class="ghost">Level map ↗</button></div>
+          <div class="mission-meta"><span>◷ <b id="attempts-meta">8</b> attempts available</span><span>◎ <b id="digits-meta">3</b>-digit PIN</span><span>✧ <b id="reward-meta">100</b> XP reward</span></div>
+          <div class="lock-wrap"><div class="lock-ring ring-one"></div><div class="lock-ring ring-two"></div><div class="lock-core"><div class="lock-symbol">▣</div><div class="lock-label">ENCRYPTED PIN</div><div class="pin-slots" id="pin-slots"><span>_</span><span>_</span><span>_</span></div><div class="lock-caption">ENTER YOUR GUESSED CODE</div></div></div>
+          <div class="guess-entry"><label for="guess-input">Your guess</label><div class="guess-row"><input id="guess-input" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="Enter PIN"><button id="submit-guess" class="primary">SUBMIT <span>↗</span></button></div><div class="input-hint" id="input-hint">Use unique digits. The clues will guide you.</div></div>
+          <div class="keypad" id="keypad"><button data-digit="1">1</button><button data-digit="2">2</button><button data-digit="3">3</button><button data-digit="4">4</button><button data-digit="5">5</button><button data-digit="6">6</button><button data-digit="7">7</button><button data-digit="8">8</button><button data-digit="9">9</button><button data-action="clear" class="key-muted">CLR</button><button data-digit="0">0</button><button data-action="back" class="key-muted">⌫</button></div>
+          <div id="result-banner" class="result-banner hidden"></div>
+        </section>
+        <aside class="side-column">
+          <section class="panel intel-panel"><div class="panel-heading"><div><div class="eyebrow">INTELLIGENCE</div><h3>Clue decoder</h3></div><span class="intel-icon">⌘</span></div><p class="muted small-copy">After each guess, the system reveals how close you are.</p><div class="clue-legend"><div><span class="legend-dot exact"></span><div><b>Exact match</b><small>Correct digit, correct position</small></div></div><div><span class="legend-dot misplaced"></span><div><b>Misplaced</b><small>Correct digit, wrong position</small></div></div><div><span class="legend-dot absent"></span><div><b>Not in code</b><small>Digit does not appear in PIN</small></div></div></div><div class="math-note"><span>∑</span><div><b>Math behind the mission</b><p id="math-explainer">A 3-digit PIN with unique digits has 10 × 9 × 8 = 720 possible codes.</p></div></div></section>
+          <section class="panel history-panel"><div class="panel-heading"><div><div class="eyebrow">LIVE TRACE</div><h3>Guess history</h3></div><span class="history-count" id="history-count">0 / 8</span></div><div id="guess-history" class="guess-history"><div class="empty-history"><span>⌁</span><p>Your attempts will appear here.</p></div></div></section>
+          <section class="panel tip-panel"><span class="tip-icon">✦</span><div><b>Operative tip</b><p id="tip-text">Start with varied digits. Use each clue to eliminate possibilities, not to guess randomly.</p></div></section>
+        </aside>
+      </div>
+      <section id="level-map" class="panel level-map hidden"><div class="panel-heading"><div><div class="eyebrow">MISSION SELECT</div><h2>Level map</h2></div><button id="levels-close" class="ghost">Close ✕</button></div><p class="muted">Only unlocked levels can be selected. Beat the current mission to advance.</p><div id="level-grid" class="level-grid"></div></section>
+      <footer class="footer"><span>CODEBREAKER // LOGIC OVER LUCK</span><span>SESSION ENCRYPTED · <span id="save-status">LOCAL DEMO MODE</span></span></footer>
+    </section>
+  </main>
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-card"><div id="modal-symbol" class="modal-symbol">✓</div><div class="eyebrow" id="modal-eyebrow">MISSION COMPLETE</div><h2 id="modal-title">Code cracked!</h2><p id="modal-copy">You solved the puzzle.</p><div id="modal-stats" class="modal-stats"></div><button id="modal-action" class="primary full">Next level →</button><button id="modal-secondary" class="ghost full">Review clues</button></div></div>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
